@@ -9,10 +9,17 @@ public class PlayerMovement : MonoBehaviour
     public GameObject target;
     public Camera cam;
 
+    GameObject tarClone;
+
     // Update is called once per frame
     void Update()
     {
         //Check for Left Mouse button pressed
+        if (Input.GetMouseButtonUp(0))
+        {
+            Destroy(tarClone);
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             //create new ray from camera at mouse position
@@ -22,13 +29,13 @@ public class PlayerMovement : MonoBehaviour
             RaycastHit hit;
 
             //check if the raycast hits anything
-            if(Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit))
             {
                 //Set destination for agent
                 agent.SetDestination(hit.point);
 
                 //Create target at hitpoint
-                Instantiate(target, hit.point, Quaternion.identity);
+                tarClone = Instantiate(target, hit.point, Quaternion.identity);
             }
         }
     }
